@@ -1,10 +1,13 @@
 package com.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 @Entity
 @Table(name = "product")
@@ -14,8 +17,10 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@Column(name = "name", nullable = true)
 	private String name;
 
+	@Column(name = "price", nullable = true)
 	private int price;
 
 	public int getId() {
@@ -40,6 +45,12 @@ public class Product {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+
+		return ReflectionToStringBuilder.toString(this);
 	}
 
 }
