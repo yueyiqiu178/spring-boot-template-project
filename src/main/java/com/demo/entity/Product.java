@@ -14,7 +14,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "name", nullable = true)

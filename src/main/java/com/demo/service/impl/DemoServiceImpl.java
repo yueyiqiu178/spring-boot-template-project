@@ -16,10 +16,19 @@ public class DemoServiceImpl implements DemoService{
 	public void insertProduct() {
 		
 		Product product = new Product();
-		product.setName("Code");
-		product.setPrice(100);
-		
-		productRepository.save(product);
+//		product.setId(1);
+//		product.setName("Code");
+//		product.setPrice(100);
+
+		for(int i=1;i<9;i++){
+			product = new Product();
+			product.setId(i*1000);
+			product.setName("Code"+i);
+			product.setPrice(i*7);
+			productRepository.save(product);
+		}
+
+
 	}
 	
 }
