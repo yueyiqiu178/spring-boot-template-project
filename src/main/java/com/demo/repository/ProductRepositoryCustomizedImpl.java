@@ -1,7 +1,11 @@
 package com.demo.repository;
 
+import com.demo.vo.ProductVo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.query.internal.NativeQueryImpl;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,17 +23,31 @@ public class ProductRepositoryCustomizedImpl implements ProductRepositoryCustomi
 
     public void query(){
 
-        String sql = "select * from product";
-        Query query = entityManager.createNativeQuery(sql);
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select price as qPrice from product ");
 
-        List<Object[]> players = query.getResultList();
+        //String sql = "select * from product";
+        Query query = entityManager.createNativeQuery(sb.toString());
+        query.unwrap(NativeQueryImpl.class)
+                .setResultTransformer(Transformers.aliasToBean(ProductVo.class))
+                .addScalar("qPrice", StringType.INSTANCE);
 
-        for(Object Object : players){
 
+//        List<Object[]> players = query.getResultList();
+//
+//        for(Object[] Objects : players){
+//
+//            logger.info(Objects[0]);
+//            logger.info(Objects[1]);
+//            logger.info(Objects[2]);
+//
+//        }
+
+        List<ProductVo> players = query.getResultList();
+
+        for(ProductVo p : players){
+            logger.info(p.getqPrice());
         }
-
-        logger.info("queryqueryquery");
-        logger.info(players);
 
     }
 
